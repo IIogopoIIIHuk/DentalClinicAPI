@@ -1,4 +1,4 @@
-package com.example.DentalClinicAPI;
+package com.example.DentalClinicAPI.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,6 +37,7 @@ public class Service {
     private int counts;
 
 
+
     public Service( String title, String dataService, int price, String description, int counts){
         this.title = title;
         this.dataService = dataService;
@@ -49,13 +50,13 @@ public class Service {
 
     @Override
     public String toString(){
-        return "Book{" +
+        return "Service{" +
                 "id= " + id +
-                ", isbn= " + title +
-                ", title= " + dataService +
-                ", description= " + price +
-                ", genre= " + description +
-                ", author= " + counts +
+                ", title= " + title +
+                ", dataService= " + dataService +
+                ", price= " + price +
+                ", description= " + description +
+                ", counts= " + counts +
                 '}';
     }
 

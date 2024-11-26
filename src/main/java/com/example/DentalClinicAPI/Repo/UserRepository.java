@@ -1,7 +1,7 @@
 package com.example.DentalClinicAPI.Repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.DentalClinicAPI.User;
+import com.example.DentalClinicAPI.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
