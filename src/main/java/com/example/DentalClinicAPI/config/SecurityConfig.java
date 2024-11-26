@@ -51,10 +51,10 @@ public class SecurityConfig {
                                         "/swagger-ui/**",
                                         "/swagger-ui.html"
                                 ).permitAll()
-//                        .requestMatchers("/secured").authenticated()
-//                        .requestMatchers("/info").authenticated()
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/user/**").hasRole("USER")
 //                        .requestMatchers("/admin").authenticated()
-                                .anyRequest().permitAll()
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

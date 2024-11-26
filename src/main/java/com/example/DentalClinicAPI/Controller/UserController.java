@@ -34,7 +34,7 @@ public class UserController {
             summary = "user is getting all services"
     )
     @GetMapping("/allServices")
-//    @PreAuthorize("hasRole('ADMIN')")  под вопросом роль
+    @PreAuthorize("hasRole('USER')")
     private List<Service> getAllService(){
         return serviceRepository.findAll();
     }

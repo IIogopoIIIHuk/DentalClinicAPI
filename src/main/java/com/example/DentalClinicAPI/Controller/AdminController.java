@@ -66,6 +66,12 @@ public class AdminController {
         return userRepository.findAll();
     }
 
+    @GetMapping("/AppointmentList")
+    @PreAuthorize("hasRole('ADMIN')")
+    private List<Appointment> getAppointment(){
+        return appointmentRepository.findAll();
+    }
+
 //    @Operation(
 //            summary = "admin is getting service special patient",
 //            description = "service getting by patient username"
