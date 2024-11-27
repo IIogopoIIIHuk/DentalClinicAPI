@@ -54,7 +54,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/user/**").hasRole("USER")
 //                        .requestMatchers("/admin").authenticated()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

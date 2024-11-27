@@ -1,10 +1,13 @@
 package com.example.DentalClinicAPI.Controller;
 
+import com.example.DentalClinicAPI.DTO.ClinicDTO;
 import com.example.DentalClinicAPI.DTO.ServiceDTO;
 import com.example.DentalClinicAPI.Repo.AppointmentRepository;
+import com.example.DentalClinicAPI.Repo.ClinicRepository;
 import com.example.DentalClinicAPI.Repo.ServiceRepository;
 import com.example.DentalClinicAPI.Repo.UserRepository;
 import com.example.DentalClinicAPI.entity.Appointment;
+import com.example.DentalClinicAPI.entity.Clinic;
 import com.example.DentalClinicAPI.entity.Service;
 import com.example.DentalClinicAPI.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,8 +30,7 @@ public class AdminController {
     private final ServiceRepository serviceRepository;
     private final UserRepository userRepository;
     private final AppointmentRepository appointmentRepository;
-
-
+    private final ClinicRepository clinicRepository;
 
     @Operation(
             summary = "this method add new service in database",
@@ -44,6 +46,22 @@ public class AdminController {
                         .price(serviceDTO.getPrice())
                         .description(serviceDTO.getDescription())
                         .counts(serviceDTO.getCounts())
+                        .build())
+        );
+    }
+
+    @Operation(
+            summary = "admin is adding clinic for monitoring and analyzing"
+    )
+    @PostMapping("/addClinic")
+    @PreAuthorize("hasRole('ADMIN')")
+    private void addClinic(@RequestBody ClinicDTO clinicDTO){
+        log.info("New row: " + clinicRepository.save(
+                Clinic.builder()
+                        .title(clinicDTO.getTitle())
+                        .services(clinicDTO.getServices())
+                        .awards(clinicDTO.getAwards())
+                        .dateBorn(clinicDTO.getDateBorn())
                         .build())
         );
     }
@@ -66,6 +84,9 @@ public class AdminController {
         return userRepository.findAll();
     }
 
+    @Operation(
+            summary = "admin is getting all successfully appointment other users"
+    )
     @GetMapping("/AppointmentList")
     @PreAuthorize("hasRole('ADMIN')")
     private List<Appointment> getAppointment(){
@@ -114,6 +135,15 @@ public class AdminController {
         serviceRepository.deleteById(id);
         log.info("Service deleted: {}", service.getTitle());
         return ResponseEntity.ok("Service and related appointments deleted successfully");
+    }
+
+    @Operation(
+            summary = "admin is deleting clinic from DB"
+    )
+    @DeleteMapping("/deleteClinic")
+    @PreAuthorize("hasRole('ADMIN')")
+    private void deleteCLinic(@RequestBody Long id){
+        clinicRepository.deleteById(id);
     }
 
     @Operation(

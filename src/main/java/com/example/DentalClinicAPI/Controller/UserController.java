@@ -2,14 +2,17 @@ package com.example.DentalClinicAPI.Controller;
 
 import com.example.DentalClinicAPI.DTO.ServiceDTO;
 import com.example.DentalClinicAPI.Repo.AppointmentRepository;
+import com.example.DentalClinicAPI.Repo.ClinicRepository;
 import com.example.DentalClinicAPI.Repo.ServiceRepository;
 import com.example.DentalClinicAPI.Repo.UserRepository;
 import com.example.DentalClinicAPI.entity.Appointment;
+import com.example.DentalClinicAPI.entity.Clinic;
 import com.example.DentalClinicAPI.entity.Service;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +30,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final ServiceRepository serviceRepository;
     private final AppointmentRepository appointmentRepository;
-
+    private final ClinicRepository clinicRepository;
 
 
     @Operation(
@@ -39,8 +42,27 @@ public class UserController {
         return serviceRepository.findAll();
     }
 
+
     @Operation(
-            summary = ""
+            summary = "user is getting all clinic for monitoring and analyzing"
+    )
+    @GetMapping("/allClinic")
+    @PreAuthorize("hasRole('USER')")
+    private List<Clinic> getAllClinic(){
+        return clinicRepository.findAll();
+    }
+
+//    @Operation(
+//            summary = "user is searching clinic by title"
+//    )
+//    @GetMapping("/searchService")
+//    @PreAuthorize("hasRole('USER')")
+//    private List<Clinic> getClinicByTitle(@RequestParam String title){
+//        return clinicRepository.findByTitle(title);
+//    }
+
+    @Operation(
+            summary = "user make an appointment to service"
     )
     @PostMapping("/makeAnAppointment/{id}")
     @PreAuthorize("hasRole('USER')")
@@ -65,6 +87,9 @@ public class UserController {
         return ResponseEntity.ok("appointment successfully added");
     }
 
+    @Operation(
+            summary = "user is getting own appointment"
+    )
     @GetMapping("/myAppointment")
     @PreAuthorize("hasRole('USER')")
     private List<Appointment> getOwnAppointment(){
@@ -81,6 +106,9 @@ public class UserController {
         return serviceRepository.findServiceByTitle(title);
     }
 
+    @Operation(
+            summary = "user is deleting his appointment"
+    )
     @DeleteMapping("/deleteAppointment")
     @PreAuthorize("hasRole('USER')")
     private void deleteAppointment(@RequestParam Long id){
