@@ -1,30 +1,36 @@
 package com.example.DentalClinicAPI.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
-@Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
 @Builder
-@Table(name = "clinics")
-public class Clinic {
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "external_clinics")
+public class ExternalClinic {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "contact")
+    @Column(name = "contact", nullable = false)
     private String contact;
 
+    private String latitude;
+
+    private String longitude;
+
     @OneToMany(mappedBy = "clinic", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Service> services;
+    private List<ExternalService> services;
 }

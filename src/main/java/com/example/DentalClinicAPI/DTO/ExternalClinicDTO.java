@@ -5,10 +5,12 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ClinicDTO {
+public class ExternalClinicDTO {
     private Long id;
     private String name;
     private String address;
     private String contact;
-    private List<ServiceDTO> services;
+    private String latitude;
+    private String longitude;
+    private List<ExternalServiceDTO> services;
 }

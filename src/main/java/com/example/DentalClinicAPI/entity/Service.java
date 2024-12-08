@@ -1,18 +1,19 @@
 package com.example.DentalClinicAPI.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.CodePointLength;
-import org.springframework.core.SpringVersion;
-import org.springframework.web.bind.annotation.PutMapping;
+import lombok.NoArgsConstructor;
 
+import java.util.List;
 
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "services")
 public class Service {
 
@@ -21,43 +22,34 @@ public class Service {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "dateService")
-    private String dataService;
-
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private int price;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 500)
     private String description;
 
-    @Column(name = "counts")
+    @Column(name = "counts", nullable = false)
     private int counts;
 
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Availability> availabilities; // Список доступных мест
 
-
-    public Service( String title, String dataService, int price, String description, int counts){
-        this.title = title;
-        this.dataService = dataService;
-        this.price = price;
-        this. description = description;
-        this.counts = counts;
-    }
-
-    public Service(){}
+    @ManyToOne
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinic;
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Service{" +
-                "id= " + id +
-                ", title= " + title +
-                ", dataService= " + dataService +
-                ", price= " + price +
-                ", description= " + description +
-                ", counts= " + counts +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", counts=" + counts +
                 '}';
     }
-
 }

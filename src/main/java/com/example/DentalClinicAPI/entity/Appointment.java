@@ -22,8 +22,11 @@ public class Appointment {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "dataService")
-    private String dataService;
+    @Column(name = "date")
+    private String date;
+
+    @Column(name = "time")
+    private String time;
 
     @Column(name = "price")
     private int price;
@@ -38,7 +41,8 @@ public class Appointment {
         return "Appointment{" +
                 "id= " + id +
                 ", title= " + title +
-                ", dataService= " + dataService +
+                ", date= " + date +
+                ", time= " + time +
                 ", price= " + price +
                 ", description= " + description +
                 ", patient= " + patient +

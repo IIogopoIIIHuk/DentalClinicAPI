@@ -127,6 +127,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+			<version>3.1.2.RELEASE</version>
+		</dependency>
 
 
 
@@ -174,6 +179,8 @@
 			<version>3.26.3</version>
 			<scope>test</scope>
 		</dependency>
+
+
 	</dependencies>
 
 
