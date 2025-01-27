@@ -24,8 +24,6 @@ public class UserService implements UserDetailsService {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
-
-
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
